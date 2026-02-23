@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using Newtonsoft.Json.Serialization;
 using SecureCoding.SecureSerialization;
 
-[assembly: InternalsVisibleTo("Skyline.DataMiner.Utils.SecureCoding.Analyzers.Tests")]
 namespace Skyline.DataMiner.Utils.SecureCoding.SecureSerialization.Json.Newtonsoft
 {
     internal class KnownTypesSerializationBinder : ISerializationBinder
