@@ -30,20 +30,20 @@
         public void SimpleObjectDeserializationFailure()
         {
             // wrong arguments
-            Assert.ThrowsException<ArgumentException>(() => SecureNewtonsoftDeserialization.DeserializeObject<SimpleDummy>(null));
+            Assert.Throws<ArgumentException>(() => SecureNewtonsoftDeserialization.DeserializeObject<SimpleDummy>(null));
 
             // wrong json string
-            Assert.ThrowsException<JsonSerializationException>(() => SecureNewtonsoftDeserialization.DeserializeObject<SimpleDummy>("{"));
-            Assert.ThrowsException<JsonReaderException>(() => SecureNewtonsoftDeserialization.DeserializeObject<SimpleDummy>("{ \" }"));
-            Assert.ThrowsException<JsonReaderException>(() => SecureNewtonsoftDeserialization.DeserializeObject<SimpleDummy>("{ : }"));
+            Assert.Throws<JsonSerializationException>(() => SecureNewtonsoftDeserialization.DeserializeObject<SimpleDummy>("{"));
+            Assert.Throws<JsonReaderException>(() => SecureNewtonsoftDeserialization.DeserializeObject<SimpleDummy>("{ \" }"));
+            Assert.Throws<JsonReaderException>(() => SecureNewtonsoftDeserialization.DeserializeObject<SimpleDummy>("{ : }"));
 
 
             // too complex objects
             ComplexDummy dummy = new ComplexDummy(new List<IDummy> { new ComplexDummy(new List<IDummy>()) });
             string serializedComplexDummy = JsonConvert.SerializeObject(dummy);
 
-            Assert.ThrowsException<JsonSerializationException>(() => SecureNewtonsoftDeserialization.DeserializeObject<ComplexDummy>(serializedComplexDummy));
-            Assert.ThrowsException<JsonSerializationException>(() => SecureNewtonsoftDeserialization.DeserializeObject<IDummy>(serializedComplexDummy));
+            Assert.Throws<JsonSerializationException>(() => SecureNewtonsoftDeserialization.DeserializeObject<ComplexDummy>(serializedComplexDummy));
+            Assert.Throws<JsonSerializationException>(() => SecureNewtonsoftDeserialization.DeserializeObject<IDummy>(serializedComplexDummy));
         }
 
         [TestMethod]
@@ -68,7 +68,7 @@
                 MissingMemberHandling = MissingMemberHandling.Error
             };
 
-            Assert.ThrowsException<JsonSerializationException>(() => SecureNewtonsoftDeserialization.DeserializeObject<SimpleDummy>("{ \"NonExistant\":null }", serializerSettings));
+            Assert.Throws<JsonSerializationException>(() => SecureNewtonsoftDeserialization.DeserializeObject<SimpleDummy>("{ \"NonExistant\":null }", serializerSettings));
         }
 
         [TestMethod]
@@ -76,11 +76,11 @@
         {
             // wrong arguments
             JsonSerializerSettings settings = new JsonSerializerSettings();
-            Assert.ThrowsException<ArgumentException>(() => SecureNewtonsoftDeserialization.DeserializeObject<SimpleDummy>(null, settings));
+            Assert.Throws<ArgumentException>(() => SecureNewtonsoftDeserialization.DeserializeObject<SimpleDummy>(null, settings));
 
             settings = new JsonSerializerSettings();
             settings.TypeNameHandling = TypeNameHandling.All;
-            Assert.ThrowsException<InsecureSerializationSettingsException>(() => SecureNewtonsoftDeserialization.DeserializeObject<SimpleDummy>("{ }", settings));
+            Assert.Throws<InsecureSerializationSettingsException>(() => SecureNewtonsoftDeserialization.DeserializeObject<SimpleDummy>("{ }", settings));
         }
 
         [TestMethod]
@@ -113,8 +113,8 @@
 
             var serializedComplexDummy = JsonConvert.SerializeObject(complexDummy, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
 
-            Assert.ThrowsException<JsonSerializationException>(() => SecureNewtonsoftDeserialization.DeserializeObject<ComplexDummy>(serializedComplexDummy, knownTypes));
-            Assert.ThrowsException<ArgumentException>(() => SecureNewtonsoftDeserialization.DeserializeObject<ComplexDummy>(null, knownTypes));
+            Assert.Throws<JsonSerializationException>(() => SecureNewtonsoftDeserialization.DeserializeObject<ComplexDummy>(serializedComplexDummy, knownTypes));
+            Assert.Throws<ArgumentException>(() => SecureNewtonsoftDeserialization.DeserializeObject<ComplexDummy>(null, knownTypes));
         }
 
         [TestMethod]
@@ -127,10 +127,10 @@
             }";
 
             // Act & Assert
-            Assert.ThrowsException<ArgumentException>(() => SecureNewtonsoftDeserialization.DeserializeObject<object>(payload, new List<Type>()));
-            Assert.ThrowsException<ArgumentException>(() => SecureNewtonsoftDeserialization.DeserializeObject<object>(payload, default(List<Type>)));
-            Assert.ThrowsException<JsonSerializationException>(() => SecureNewtonsoftDeserialization.DeserializeObject<object>(payload, new List<Type> { typeof(SecurePath) }));
-            Assert.ThrowsException<KnownExploitableTypeException>(() => SecureNewtonsoftDeserialization.DeserializeObject<object>(payload, new List<Type> { typeof(System.Security.Principal.WindowsIdentity) }));
+            Assert.Throws<ArgumentException>(() => SecureNewtonsoftDeserialization.DeserializeObject<object>(payload, new List<Type>()));
+            Assert.Throws<ArgumentException>(() => SecureNewtonsoftDeserialization.DeserializeObject<object>(payload, default(List<Type>)));
+            Assert.Throws<JsonSerializationException>(() => SecureNewtonsoftDeserialization.DeserializeObject<object>(payload, new List<Type> { typeof(SecurePath) }));
+            Assert.Throws<KnownExploitableTypeException>(() => SecureNewtonsoftDeserialization.DeserializeObject<object>(payload, new List<Type> { typeof(System.Security.Principal.WindowsIdentity) }));
         }
     }
 }

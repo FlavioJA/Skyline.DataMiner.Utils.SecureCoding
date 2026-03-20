@@ -45,7 +45,7 @@
         [DataRow("\n")]
         public void IsPathValidException(string path)
         {
-            Assert.ThrowsException<ArgumentException>(() => { StringExtensions.IsPathValid(path); });
+            Assert.Throws<ArgumentException>(() => { StringExtensions.IsPathValid(path); });
         }
     }
 }
