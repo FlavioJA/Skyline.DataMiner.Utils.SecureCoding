@@ -72,92 +72,92 @@
         public void SecureAssemblyLoadFile_X509Certificate2Argument_Failure()
         {
             // Arguments Test
-            Assert.ThrowsException<ArgumentException>(() => SecureAssembly.LoadFrom(string.Empty, default(X509Certificate2)));
-            Assert.ThrowsException<ArgumentException>(() => SecureAssembly.LoadFrom("ValidString", new X509Certificate2[0]));
-            Assert.ThrowsException<ArgumentException>(() => SecureAssembly.LoadFile(string.Empty, default(X509Certificate2)));
-            Assert.ThrowsException<ArgumentException>(() => SecureAssembly.LoadFile("ValidString", new X509Certificate2[0]));
+            Assert.Throws<ArgumentException>(() => SecureAssembly.LoadFrom(string.Empty, default(X509Certificate2)));
+            Assert.Throws<ArgumentException>(() => SecureAssembly.LoadFrom("ValidString", new X509Certificate2[0]));
+            Assert.Throws<ArgumentException>(() => SecureAssembly.LoadFile(string.Empty, default(X509Certificate2)));
+            Assert.Throws<ArgumentException>(() => SecureAssembly.LoadFile("ValidString", new X509Certificate2[0]));
 
             var selfSignedCertificate = new X509Certificate2(selfSignedCertificatePfxPath, selfSignedCertificatePassword);
 
             // Signed with different Certificate test
-            Assert.ThrowsException<SecurityException>(() => SecureAssembly.LoadFrom(signedTestDllPath, selfSignedCertificate));
-            Assert.ThrowsException<SecurityException>(() => SecureAssembly.LoadFile(signedTestDllPath, selfSignedCertificate));
+            Assert.Throws<SecurityException>(() => SecureAssembly.LoadFrom(signedTestDllPath, selfSignedCertificate));
+            Assert.Throws<SecurityException>(() => SecureAssembly.LoadFile(signedTestDllPath, selfSignedCertificate));
 
             // Self Signed Extension (.pfx/p.12) Test
-            Assert.ThrowsException<SecurityException>(() => SecureAssembly.LoadFrom(selfSignedTestDllPath, selfSignedCertificate));
-            Assert.ThrowsException<SecurityException>(() => SecureAssembly.LoadFile(selfSignedTestDllPath, selfSignedCertificate));
+            Assert.Throws<SecurityException>(() => SecureAssembly.LoadFrom(selfSignedTestDllPath, selfSignedCertificate));
+            Assert.Throws<SecurityException>(() => SecureAssembly.LoadFile(selfSignedTestDllPath, selfSignedCertificate));
 
             var emptyByteArr = Array.Empty<byte>();
 
             // Unsigned Test
-            Assert.ThrowsException<SecurityException>(() => SecureAssembly.LoadFrom(unsignedTestDllPath, new X509Certificate2(emptyByteArr)));
-            Assert.ThrowsException<SecurityException>(() => SecureAssembly.LoadFile(unsignedTestDllPath, new X509Certificate2(emptyByteArr)));
+            Assert.Throws<SecurityException>(() => SecureAssembly.LoadFrom(unsignedTestDllPath, new X509Certificate2(emptyByteArr)));
+            Assert.Throws<SecurityException>(() => SecureAssembly.LoadFile(unsignedTestDllPath, new X509Certificate2(emptyByteArr)));
 
             // Tampered Test
-            Assert.ThrowsException<SecurityException>(() => SecureAssembly.LoadFrom(tamperedTestDllPath, new X509Certificate2(emptyByteArr)));
-            Assert.ThrowsException<SecurityException>(() => SecureAssembly.LoadFile(tamperedTestDllPath, new X509Certificate2(emptyByteArr)));
+            Assert.Throws<SecurityException>(() => SecureAssembly.LoadFrom(tamperedTestDllPath, new X509Certificate2(emptyByteArr)));
+            Assert.Throws<SecurityException>(() => SecureAssembly.LoadFile(tamperedTestDllPath, new X509Certificate2(emptyByteArr)));
         }
 
         [TestMethod]
         public void SecureAssemblyLoadFile_CertificatePathArgument_Failure()
         {
             // Arguments Test
-            Assert.ThrowsException<ArgumentException>(() => SecureAssembly.LoadFrom(string.Empty, default(string)));
-            Assert.ThrowsException<ArgumentException>(() => SecureAssembly.LoadFrom("ValidString", new string[0]));
-            Assert.ThrowsException<ArgumentException>(() => SecureAssembly.LoadFrom(signedTestDllPath, selfSignedCertificatePfxPath));
+            Assert.Throws<ArgumentException>(() => SecureAssembly.LoadFrom(string.Empty, default(string)));
+            Assert.Throws<ArgumentException>(() => SecureAssembly.LoadFrom("ValidString", new string[0]));
+            Assert.Throws<ArgumentException>(() => SecureAssembly.LoadFrom(signedTestDllPath, selfSignedCertificatePfxPath));
 
-            Assert.ThrowsException<ArgumentException>(() => SecureAssembly.LoadFile(string.Empty, default(string)));
-            Assert.ThrowsException<ArgumentException>(() => SecureAssembly.LoadFile("ValidString", new string[0]));
-            Assert.ThrowsException<ArgumentException>(() => SecureAssembly.LoadFile(signedTestDllPath, selfSignedCertificatePfxPath));
+            Assert.Throws<ArgumentException>(() => SecureAssembly.LoadFile(string.Empty, default(string)));
+            Assert.Throws<ArgumentException>(() => SecureAssembly.LoadFile("ValidString", new string[0]));
+            Assert.Throws<ArgumentException>(() => SecureAssembly.LoadFile(signedTestDllPath, selfSignedCertificatePfxPath));
 
             // Signed with different Certificate test
-            Assert.ThrowsException<SecurityException>(() => SecureAssembly.LoadFrom(selfSignedTestDllPath, signedCertificatePath));
-            Assert.ThrowsException<SecurityException>(() => SecureAssembly.LoadFile(selfSignedTestDllPath, signedCertificatePath));
+            Assert.Throws<SecurityException>(() => SecureAssembly.LoadFrom(selfSignedTestDllPath, signedCertificatePath));
+            Assert.Throws<SecurityException>(() => SecureAssembly.LoadFile(selfSignedTestDllPath, signedCertificatePath));
 
             // Unsigned Test
-            Assert.ThrowsException<SecurityException>(() => SecureAssembly.LoadFrom(unsignedTestDllPath, signedCertificatePath));
-            Assert.ThrowsException<SecurityException>(() => SecureAssembly.LoadFile(unsignedTestDllPath, signedCertificatePath));
+            Assert.Throws<SecurityException>(() => SecureAssembly.LoadFrom(unsignedTestDllPath, signedCertificatePath));
+            Assert.Throws<SecurityException>(() => SecureAssembly.LoadFile(unsignedTestDllPath, signedCertificatePath));
 
             // Tampered Test
-            Assert.ThrowsException<SecurityException>(() => SecureAssembly.LoadFrom(tamperedTestDllPath, signedCertificatePath));
-            Assert.ThrowsException<SecurityException>(() => SecureAssembly.LoadFile(tamperedTestDllPath, signedCertificatePath));
+            Assert.Throws<SecurityException>(() => SecureAssembly.LoadFrom(tamperedTestDllPath, signedCertificatePath));
+            Assert.Throws<SecurityException>(() => SecureAssembly.LoadFile(tamperedTestDllPath, signedCertificatePath));
         }
 
         [TestMethod]
         public void SecureAssemblyLoadFile_CertificateInBytes_Failure()
         {
             // Arguments Test
-            Assert.ThrowsException<ArgumentException>(() => SecureAssembly.LoadFrom(string.Empty, default(byte[])));
-            Assert.ThrowsException<ArgumentException>(() => SecureAssembly.LoadFrom(string.Empty, default(List<byte[]>)));
-            Assert.ThrowsException<ArgumentException>(() => SecureAssembly.LoadFrom("ValidString", new byte[0]));
-            Assert.ThrowsException<ArgumentException>(() => SecureAssembly.LoadFrom("ValidString", new List<byte[]> { new byte[0] }));
-            Assert.ThrowsException<ArgumentException>(() => SecureAssembly.LoadFrom(signedTestDllPath, selfSignedCertificatePfxPath));
+            Assert.Throws<ArgumentException>(() => SecureAssembly.LoadFrom(string.Empty, default(byte[])));
+            Assert.Throws<ArgumentException>(() => SecureAssembly.LoadFrom(string.Empty, default(List<byte[]>)));
+            Assert.Throws<ArgumentException>(() => SecureAssembly.LoadFrom("ValidString", new byte[0]));
+            Assert.Throws<ArgumentException>(() => SecureAssembly.LoadFrom("ValidString", new List<byte[]> { new byte[0] }));
+            Assert.Throws<ArgumentException>(() => SecureAssembly.LoadFrom(signedTestDllPath, selfSignedCertificatePfxPath));
 
-            Assert.ThrowsException<ArgumentException>(() => SecureAssembly.LoadFile(string.Empty, default(byte[])));
-            Assert.ThrowsException<ArgumentException>(() => SecureAssembly.LoadFile(string.Empty, default(List<byte[]>)));
-            Assert.ThrowsException<ArgumentException>(() => SecureAssembly.LoadFile("ValidString", new byte[0]));
-            Assert.ThrowsException<ArgumentException>(() => SecureAssembly.LoadFile("ValidString", new List<byte[]> { new byte[0] }));
-            Assert.ThrowsException<ArgumentException>(() => SecureAssembly.LoadFile(signedTestDllPath, selfSignedCertificatePfxPath));
+            Assert.Throws<ArgumentException>(() => SecureAssembly.LoadFile(string.Empty, default(byte[])));
+            Assert.Throws<ArgumentException>(() => SecureAssembly.LoadFile(string.Empty, default(List<byte[]>)));
+            Assert.Throws<ArgumentException>(() => SecureAssembly.LoadFile("ValidString", new byte[0]));
+            Assert.Throws<ArgumentException>(() => SecureAssembly.LoadFile("ValidString", new List<byte[]> { new byte[0] }));
+            Assert.Throws<ArgumentException>(() => SecureAssembly.LoadFile(signedTestDllPath, selfSignedCertificatePfxPath));
 
             var signedCertificateInBytes = System.IO.File.ReadAllBytes(signedCertificatePath);
 
             // Signed with different Certificate test
-            Assert.ThrowsException<SecurityException>(() => SecureAssembly.LoadFrom(selfSignedTestDllPath, signedCertificateInBytes));
-            Assert.ThrowsException<SecurityException>(() => SecureAssembly.LoadFrom(selfSignedTestDllPath, new List<byte[]> { signedCertificateInBytes }));
-            Assert.ThrowsException<SecurityException>(() => SecureAssembly.LoadFile(selfSignedTestDllPath, signedCertificateInBytes));
-            Assert.ThrowsException<SecurityException>(() => SecureAssembly.LoadFile(selfSignedTestDllPath, new List<byte[]> { signedCertificateInBytes }));
+            Assert.Throws<SecurityException>(() => SecureAssembly.LoadFrom(selfSignedTestDllPath, signedCertificateInBytes));
+            Assert.Throws<SecurityException>(() => SecureAssembly.LoadFrom(selfSignedTestDllPath, new List<byte[]> { signedCertificateInBytes }));
+            Assert.Throws<SecurityException>(() => SecureAssembly.LoadFile(selfSignedTestDllPath, signedCertificateInBytes));
+            Assert.Throws<SecurityException>(() => SecureAssembly.LoadFile(selfSignedTestDllPath, new List<byte[]> { signedCertificateInBytes }));
 
             // Unsigned Test
-            Assert.ThrowsException<SecurityException>(() => SecureAssembly.LoadFrom(unsignedTestDllPath, signedCertificateInBytes));
-            Assert.ThrowsException<SecurityException>(() => SecureAssembly.LoadFrom(unsignedTestDllPath, new List<byte[]> { signedCertificateInBytes }));
-            Assert.ThrowsException<SecurityException>(() => SecureAssembly.LoadFile(unsignedTestDllPath, signedCertificateInBytes));
-            Assert.ThrowsException<SecurityException>(() => SecureAssembly.LoadFile(unsignedTestDllPath, new List<byte[]> { signedCertificateInBytes }));
+            Assert.Throws<SecurityException>(() => SecureAssembly.LoadFrom(unsignedTestDllPath, signedCertificateInBytes));
+            Assert.Throws<SecurityException>(() => SecureAssembly.LoadFrom(unsignedTestDllPath, new List<byte[]> { signedCertificateInBytes }));
+            Assert.Throws<SecurityException>(() => SecureAssembly.LoadFile(unsignedTestDllPath, signedCertificateInBytes));
+            Assert.Throws<SecurityException>(() => SecureAssembly.LoadFile(unsignedTestDllPath, new List<byte[]> { signedCertificateInBytes }));
 
             // Tampered Test
-            Assert.ThrowsException<SecurityException>(() => SecureAssembly.LoadFrom(tamperedTestDllPath, signedCertificateInBytes));
-            Assert.ThrowsException<SecurityException>(() => SecureAssembly.LoadFrom(tamperedTestDllPath, new List<byte[]> { signedCertificateInBytes }));
-            Assert.ThrowsException<SecurityException>(() => SecureAssembly.LoadFile(tamperedTestDllPath, signedCertificateInBytes));
-            Assert.ThrowsException<SecurityException>(() => SecureAssembly.LoadFile(tamperedTestDllPath, new List<byte[]> { signedCertificateInBytes }));
+            Assert.Throws<SecurityException>(() => SecureAssembly.LoadFrom(tamperedTestDllPath, signedCertificateInBytes));
+            Assert.Throws<SecurityException>(() => SecureAssembly.LoadFrom(tamperedTestDllPath, new List<byte[]> { signedCertificateInBytes }));
+            Assert.Throws<SecurityException>(() => SecureAssembly.LoadFile(tamperedTestDllPath, signedCertificateInBytes));
+            Assert.Throws<SecurityException>(() => SecureAssembly.LoadFile(tamperedTestDllPath, new List<byte[]> { signedCertificateInBytes }));
         }
     }
 }

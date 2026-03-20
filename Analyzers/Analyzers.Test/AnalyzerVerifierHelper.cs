@@ -1,5 +1,4 @@
 ﻿using Microsoft.CodeAnalysis.CSharp.Testing;
-using Microsoft.CodeAnalysis.Testing.Verifiers;
 using Microsoft.CodeAnalysis.Testing;
 using System;
 using System.Collections.Immutable;
@@ -13,14 +12,14 @@ namespace Skyline.DataMiner.Utils.SecureCoding.Analyzers.Tests
     public static class AnalyzerVerifierHelper
     {
         /// <summary>
-        /// Builds an instance of CSharpAnalyzerTest with the specified diagnostic analyzer type and MSTest verifier,
+        /// Builds an instance of CSharpAnalyzerTest with the specified diagnostic analyzer type and default verifier,
         /// configured with the provided test case sources and optional package references.
         /// </summary>
         /// <typeparam name="T">The type of DiagnosticAnalyzer to use.</typeparam>
         /// <param name="testCaseSources">The source code to analyze.</param>
         /// <param name="packages">Optional package references for the test environment.</param>
         /// <returns>An instance of CSharpAnalyzerTest configured with the specified parameters.</returns>
-        public static CSharpAnalyzerTest<T, MSTestVerifier> BuildAnalyzerVerifier<T>(
+        public static CSharpAnalyzerTest<T, DefaultVerifier> BuildAnalyzerVerifier<T>(
             string testCaseSources,
             ImmutableArray<PackageIdentity> packages = default)
             where T : DiagnosticAnalyzer, new()
@@ -30,7 +29,7 @@ namespace Skyline.DataMiner.Utils.SecureCoding.Analyzers.Tests
                 throw new ArgumentException($"'{nameof(testCaseSources)}' cannot be null or empty.", nameof(testCaseSources));
             }
 
-            return new CSharpAnalyzerTest<T, MSTestVerifier>()
+            return new CSharpAnalyzerTest<T, DefaultVerifier>()
             {
                 TestState =
                 {
@@ -45,7 +44,7 @@ namespace Skyline.DataMiner.Utils.SecureCoding.Analyzers.Tests
 
         /// <summary>
         /// Builds an instance of CSharpCodeFixTest with the specified diagnostic analyzer type, code fix provider type,
-        /// and MSTest verifier, configured with the provided test case sources, fixed state sources, and optional package references.
+        /// and default verifier, configured with the provided test case sources, fixed state sources, and optional package references.
         /// </summary>
         /// <typeparam name="T1">The type of DiagnosticAnalyzer to use.</typeparam>
         /// <typeparam name="T2">The type of CodeFixProvider to use.</typeparam>
@@ -53,7 +52,7 @@ namespace Skyline.DataMiner.Utils.SecureCoding.Analyzers.Tests
         /// <param name="fixedStateSources">The source code representing the expected fixed state after applying the code fix.</param>
         /// <param name="packages">Optional package references for the test environment.</param>
         /// <returns>An instance of CSharpCodeFixTest configured with the specified parameters.</returns>
-        public static CSharpCodeFixTest<T1, T2, MSTestVerifier> BuildAnalyzerVerifierWithCodeFix<T1, T2>(
+        public static CSharpCodeFixTest<T1, T2, DefaultVerifier> BuildAnalyzerVerifierWithCodeFix<T1, T2>(
             string testCaseSources,
             string fixedStateSources,
             ImmutableArray<PackageIdentity> packages = default)
@@ -74,7 +73,7 @@ namespace Skyline.DataMiner.Utils.SecureCoding.Analyzers.Tests
                 ? ImmutableArray<PackageIdentity>.Empty
                 : packages;
 
-            return new CSharpCodeFixTest<T1, T2, MSTestVerifier>()
+            return new CSharpCodeFixTest<T1, T2, DefaultVerifier>()
             {
                 TestState =
                 {
